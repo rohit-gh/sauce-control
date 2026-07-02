@@ -148,6 +148,20 @@ export const useRepoStore = defineStore('repo', {
         body: { path: this.path, files },
       })
     },
+    async discard(files: string[]) {
+      await $fetch<RepoStatus>('/api/git/discard', {
+        method: 'POST',
+        body: { path: this.path, files },
+      })
+      await this.load(this.path)
+    },
+    async discardAll() {
+      await $fetch<RepoStatus>('/api/git/discard', {
+        method: 'POST',
+        body: { path: this.path, all: true },
+      })
+      await this.load(this.path)
+    },
     async commit(message: string) {
       const res = await $fetch<{ status: RepoStatus }>('/api/git/commit', {
         method: 'POST',

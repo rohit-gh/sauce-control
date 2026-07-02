@@ -26,6 +26,20 @@ function viewDiff(file: string, stagedFile: boolean) {
   repo.loadDiff(file, { staged: stagedFile })
 }
 
+function discardFile(f: FileChange) {
+  const warning = f.untracked
+    ? `Delete untracked file "${f.path}"? This permanently removes it and cannot be undone.`
+    : `Discard changes to "${f.path}"? This reverts the file and cannot be undone.`
+  if (!confirm(warning)) return
+  repo.discard([f.path])
+}
+
+function resetAll() {
+  const n = unstaged.value.length
+  if (!confirm(`Reset all ${n} changed file${n === 1 ? '' : 's'}? This discards every uncommitted change and deletes untracked files. This cannot be undone.`)) return
+  repo.discardAll()
+}
+
 async function commit() {
   if (!message.value.trim() || !staged.value.length) return
   committing.value = true
@@ -90,13 +104,20 @@ async function commit() {
           <span class="text-[11px] font-semibold uppercase tracking-wider text-amber-400">
             Changes ({{ unstaged.length }})
           </span>
-          <button
-            v-if="unstaged.length"
-            class="text-[11px] text-slate-400 hover:text-white"
-            @click="repo.stageAll()"
-          >
-            Stage all
-          </button>
+          <div v-if="unstaged.length" class="flex items-center gap-3">
+            <button
+              class="text-[11px] text-slate-400 hover:text-red-400"
+              @click="resetAll"
+            >
+              Reset all
+            </button>
+            <button
+              class="text-[11px] text-slate-400 hover:text-white"
+              @click="repo.stageAll()"
+            >
+              Stage all
+            </button>
+          </div>
         </div>
         <div
           v-for="f in unstaged"
@@ -108,6 +129,13 @@ async function commit() {
               {{ statusLabel(f).text }}
             </span>
             <span class="truncate text-sm text-slate-200">{{ f.path }}</span>
+          </button>
+          <button
+            class="shrink-0 text-slate-600 hover:text-red-400"
+            title="Discard changes"
+            @click="discardFile(f)"
+          >
+            ×
           </button>
           <button
             class="shrink-0 text-slate-600 hover:text-green-400"
