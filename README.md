@@ -6,6 +6,8 @@ A browser-based Git GUI client — **Git, but pleasant**. Built with **Nuxt 4** 
 
 SauceCtrl runs as a local, desktop-style app: the browser renders the UI while a local Nitro (Bun) server does the real work — running `git`, talking to the GitHub CLI (`gh`), spawning interactive terminals, and caching state in SQLite.
 
+Originally started by [@rohit-gh](https://github.com/rohit-gh) as a side project — ideas, feedback, and contributions are always welcome.
+
 ## Features
 
 - **Projects sidebar** — add and switch between multiple local repositories
