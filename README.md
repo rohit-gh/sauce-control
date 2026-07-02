@@ -32,6 +32,7 @@ Open the printed URL (e.g. `http://localhost:3001`). See [docs/getting-started.m
 Prefer not to keep a dev environment running? You can **build a single AppImage** — one portable file you double-click or launch from your app menu, with no separate install step.
 
 ```bash
+bun install
 bun run build:appimage
 ```
 
