@@ -6,12 +6,22 @@ interface GhStatus {
   version: string | null
 }
 
+interface GitEnv {
+  installed: boolean
+  version: string | null
+  userName: string | null
+  userEmail: string | null
+  configured: boolean
+}
+
 const projects = useProjectsStore()
 const ui = useUiStore()
 
 const adding = ref(false)
 const gh = ref<GhStatus | null>(null)
+const git = ref<GitEnv | null>(null)
 
+const gitReady = computed(() => !!git.value?.installed && !!git.value?.configured)
 const ghReady = computed(() => !!gh.value?.installed && !!gh.value?.authenticated)
 
 async function checkGh() {
@@ -21,13 +31,26 @@ async function checkGh() {
     gh.value = null
   }
 }
-onMounted(checkGh)
+async function checkGit() {
+  try {
+    git.value = await $fetch<GitEnv>('/api/git/env')
+  } catch {
+    git.value = null
+  }
+}
+onMounted(() => {
+  checkGit()
+  checkGh()
+})
 
-// Refresh the GitHub status whenever the setup modal is closed.
+// Refresh status whenever the setup modal is closed (git may have been configured there).
 watch(
   () => ui.ghSetupOpen,
   (open, wasOpen) => {
-    if (wasOpen && !open) checkGh()
+    if (wasOpen && !open) {
+      checkGit()
+      checkGh()
+    }
   },
 )
 
@@ -64,11 +87,51 @@ async function browseAndAdd() {
     </div>
 
     <div class="w-full max-w-md">
+      <!-- Git installation + identity requirement -->
+      <div class="rounded-xl border border-ink-700 bg-ink-850 p-4">
+        <div class="flex items-start gap-3">
+          <span
+            class="mt-0.5 text-lg"
+            :class="gitReady ? 'text-green-400' : git?.installed ? 'text-amber-400' : 'text-red-400'"
+          >
+            {{ gitReady ? '✓' : '①' }}
+          </span>
+          <div class="min-w-0 flex-1">
+            <h2 class="text-sm font-semibold text-white">Install &amp; configure Git</h2>
+            <p v-if="!git?.installed" class="mt-0.5 text-[12px] text-slate-400">
+              Git isn't installed on this device. SauceControl runs the <span class="font-mono">git</span>
+              CLI for every operation, so it's required.
+            </p>
+            <p v-else-if="!git?.configured" class="mt-0.5 text-[12px] text-slate-400">
+              Git {{ git?.version }} is installed, but your commit identity
+              (<span class="font-mono">user.name</span> / <span class="font-mono">user.email</span>)
+              isn't set yet.
+            </p>
+            <p v-else class="mt-0.5 text-[12px] text-green-400">
+              Git {{ git?.version }} ready — committing as {{ git?.userName }} &lt;{{ git?.userEmail }}&gt;.
+            </p>
+          </div>
+        </div>
+        <button
+          v-if="!gitReady"
+          class="mt-3 w-full justify-center btn-primary"
+          @click="ui.ghSetupOpen = true"
+        >
+          Set up Git
+        </button>
+      </div>
+
+      <div class="my-4 flex items-center gap-3">
+        <div class="h-px flex-1 bg-ink-800" />
+        <span class="text-[11px] text-slate-600">and connect GitHub</span>
+        <div class="h-px flex-1 bg-ink-800" />
+      </div>
+
       <!-- GitHub CLI requirement -->
       <div class="rounded-xl border border-ink-700 bg-ink-850 p-4">
         <div class="flex items-start gap-3">
           <span class="mt-0.5 text-lg" :class="ghReady ? 'text-green-400' : 'text-amber-400'">
-            {{ ghReady ? '✓' : '①' }}
+            {{ ghReady ? '✓' : '②' }}
           </span>
           <div class="min-w-0 flex-1">
             <h2 class="text-sm font-semibold text-white">Set up the GitHub CLI</h2>

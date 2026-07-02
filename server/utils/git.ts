@@ -1,6 +1,7 @@
 import { execFile } from 'node:child_process'
 import { promisify } from 'node:util'
 import { existsSync } from 'node:fs'
+import { homedir } from 'node:os'
 
 const execFileAsync = promisify(execFile)
 
@@ -37,6 +38,53 @@ export async function runGit(cwd: string, args: string[]): Promise<GitResult> {
     const message = err?.stderr?.toString().trim() || err?.message || 'git command failed'
     throw new Error(message)
   }
+}
+
+export interface GitEnvStatus {
+  /** Whether the `git` binary is on PATH and runnable. */
+  installed: boolean
+  /** Parsed `git --version` (e.g. "2.43.0"), if installed. */
+  version: string | null
+  /** Global/system `user.name`, if set. */
+  userName: string | null
+  /** Global/system `user.email`, if set. */
+  userEmail: string | null
+  /** True only when git is installed AND both name and email are configured. */
+  configured: boolean
+}
+
+/**
+ * Inspect the device's git installation and identity config. Used on first run
+ * so we can confirm git is usable (not just that a GitHub token exists).
+ *
+ * Config is read from `$HOME` so we report device-wide (global/system) identity
+ * rather than any single repository's local override.
+ */
+export async function gitEnvStatus(): Promise<GitEnvStatus> {
+  let version: string | null = null
+  try {
+    const { stdout } = await execFileAsync('git', ['--version'], {
+      env: { ...process.env, GIT_TERMINAL_PROMPT: '0' },
+    })
+    version = stdout.replace(/^git version/i, '').trim() || null
+  } catch {
+    return { installed: false, version: null, userName: null, userEmail: null, configured: false }
+  }
+
+  const read = async (key: string): Promise<string | null> => {
+    try {
+      const { stdout } = await execFileAsync('git', ['config', '--get', key], {
+        cwd: homedir(),
+        env: { ...process.env, GIT_TERMINAL_PROMPT: '0' },
+      })
+      return stdout.trim() || null
+    } catch {
+      return null
+    }
+  }
+
+  const [userName, userEmail] = await Promise.all([read('user.name'), read('user.email')])
+  return { installed: true, version, userName, userEmail, configured: Boolean(userName && userEmail) }
 }
 
 export async function isGitRepo(dir: string): Promise<boolean> {
