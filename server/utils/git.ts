@@ -20,7 +20,17 @@ export async function runGit(cwd: string, args: string[]): Promise<GitResult> {
     const { stdout, stderr } = await execFileAsync('git', args, {
       cwd,
       maxBuffer: 1024 * 1024 * 64,
-      env: { ...process.env, GIT_TERMINAL_PROMPT: '0' },
+      env: {
+        ...process.env,
+        // Never block on an interactive prompt: the app cannot service them,
+        // so a prompt would hang the request forever. GIT_TERMINAL_PROMPT
+        // covers git's own prompts; GIT_SSH_COMMAND forces ssh to fail fast
+        // instead of asking for a key passphrase or host-key confirmation.
+        GIT_TERMINAL_PROMPT: '0',
+        GIT_SSH_COMMAND:
+          process.env.GIT_SSH_COMMAND ||
+          'ssh -o BatchMode=yes -o ConnectTimeout=15 -o StrictHostKeyChecking=accept-new',
+      },
     })
     return { stdout, stderr }
   } catch (err: any) {
