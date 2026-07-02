@@ -47,6 +47,29 @@ async function waitForHttp(url: string, timeoutMs = 20000): Promise<void> {
   throw new Error(`Timed out waiting for ${url}`)
 }
 
+/**
+ * Chromium's `--start-maximized` is frequently ignored in `--app` mode, so we
+ * also pass an explicit `--window-size`/`--window-position` matching the primary
+ * display. Best-effort: fall back to a large default if detection fails.
+ */
+async function getScreenSize(): Promise<{ width: number; height: number }> {
+  const fallback = { width: 1920, height: 1080 }
+  try {
+    const proc = Bun.spawn(['xrandr', '--current'], {
+      stdout: 'pipe',
+      stderr: 'ignore',
+    })
+    const out = await new Response(proc.stdout).text()
+    await proc.exited
+    // Lines with the current mode look like: "   1920x1080     60.00*+"
+    const match = out.match(/(\d+)x(\d+)[^\n]*\*/)
+    if (match) {
+      return { width: Number(match[1]), height: Number(match[2]) }
+    }
+  } catch {}
+  return fallback
+}
+
 function pickBrowser(): { cmd: string; app: boolean } | null {
   // Prefer a Chromium-family browser so we can open a chromeless app window.
   const appBrowsers = [
@@ -127,6 +150,7 @@ async function main() {
         'browser-profile',
       )
       if (!existsSync(profileDir)) mkdirSync(profileDir, { recursive: true })
+      const { width, height } = await getScreenSize()
       const win: Subprocess = Bun.spawn(
         [
           browser.cmd,
@@ -134,6 +158,9 @@ async function main() {
           `--user-data-dir=${profileDir}`,
           '--no-first-run',
           '--no-default-browser-check',
+          '--start-maximized',
+          '--window-position=0,0',
+          `--window-size=${width},${height}`,
           '--class=SauceCtrl',
         ],
         { stdout: 'inherit', stderr: 'inherit' },
