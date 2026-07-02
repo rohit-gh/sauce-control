@@ -1,0 +1,39 @@
+---
+description: Server API, git, terminal, and database patterns
+globs: server/**/*
+alwaysApply: false
+---
+
+# Server rules
+
+## API layout
+
+```
+server/api/projects/     GET list, POST add, DELETE [id]
+server/api/git/          status, log, branches, commit, diff, stage, unstage, commit, checkout
+server/api/gh/           status
+```
+
+Handlers are thin — logic belongs in `server/utils/`.
+
+## Git parsing
+
+- **Never put NUL (`\u0000`) in `execFile` args** — Node/Bun reject it.
+- Use `FIELD = \u001f` and `REC = \u001e` for `--pretty=format` separators.
+- Use `-z` / `NUL` only when parsing **stdout** (e.g. `git status -z`).
+
+## Terminal process
+
+- `terminal-ws.ts` spawns `terminal-server.ts` once; kills child on `SIGINT`/`SIGTERM`.
+- Child exits quietly on `EADDRINUSE` (dev hot-reload).
+- Env: `SAUCE_WS_PORT` (default `3009`).
+
+## Database
+
+- Tables: `projects`, `settings`, `cache`.
+- Use helpers in `db.ts` — do not open SQLite elsewhere.
+
+## Errors
+
+- Validate input; `throw createError({ statusCode, statusMessage })` in handlers.
+- `runGit` throws with git stderr on failure.

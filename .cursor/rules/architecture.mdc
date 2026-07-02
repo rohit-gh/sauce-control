@@ -1,0 +1,37 @@
+---
+description: SauceControl architecture — read before changing core behavior
+alwaysApply: true
+---
+
+# SauceControl architecture
+
+Local Git GUI: **Nuxt 4 SPA** (`ssr: false`) + **Nitro API** on **Bun** (not Node).
+
+## Stack
+
+- **Runtime**: Bun (`bun:sqlite`, `bun:ffi`). Dev/build must use `bun --bun`.
+- **UI**: Vue 3, Pinia, Tailwind. One concern = one Nuxt component in `app/components/`.
+- **Git**: shell out to `git` CLI via `server/utils/git.ts` — do not add libgit2/nodegit.
+- **GitHub**: `gh` CLI only (`server/utils/gh.ts`).
+- **Persistence**: `~/.sauce-control/sauce-control.sqlite` via `server/utils/db.ts`.
+
+## Terminal (critical)
+
+- **Do not use `node-pty`** — broken under Bun (`ESPIPE`).
+- PTY: `openpty` via `bun:ffi` in `server/utils/pty.ts`, shell via `setsid -c`.
+- WebSocket: **separate Bun process** `server/terminal-server.ts`, supervised by `server/plugins/terminal-ws.ts`.
+- **Never** run `Bun.serve` WebSocket inside Nitro — accept loop stalls.
+- Client connects to `ws://hostname:${SAUCE_WS_PORT}` (default `3009`), not Nitro HTTP port.
+
+## Data flow
+
+```
+Browser (Vue) → $fetch /api/* → Nitro handlers → git/gh/db utils
+Browser (XTerm) → WebSocket :3009 → terminal-server → Pty
+```
+
+## Constraints
+
+- Imports: relative paths unless in `node_modules`.
+- Minimize scope; match existing patterns; no over-abstraction.
+- SQLite is server-side only (not sql.js in browser).

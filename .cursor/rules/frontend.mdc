@@ -1,0 +1,34 @@
+---
+description: Frontend components, stores, and UI conventions
+globs: app/**/*
+alwaysApply: false
+---
+
+# Frontend rules
+
+## Components
+
+- Every UI surface is a Nuxt component in `app/components/` (Sidebar, AppHeader, CommitGraph, etc.).
+- Reuse `XTerm.vue` for any embedded terminal — do not duplicate xterm/WebSocket logic.
+- Commit graph layout lives in `app/utils/graph.ts`; keep SVG rendering in `CommitGraph.vue`.
+
+## State (Pinia)
+
+| Store | Role |
+|-------|------|
+| `projects` | Sidebar list, selected project, add/remove |
+| `repo` | Git data for active project (log, branches, status, staging) |
+| `ui` | Terminal open, GitHub setup modal |
+
+Load repo data when `projects.selected.path` changes (`app/app.vue` watcher).
+
+## Styling
+
+- Dark GitKraken-inspired palette: `ink-*`, `accent` (see `tailwind.config.ts`).
+- Utility classes: `.btn-primary`, `.btn-ghost`, `.btn-subtle`, `.input` in `app/assets/css/main.css`.
+- No inline style sprawl — prefer Tailwind utilities.
+
+## API calls
+
+- Use `$fetch` to `/api/git/*`, `/api/projects/*`, `/api/gh/*`.
+- WIP / uncommitted row uses `WIP` constant from `stores/repo.ts`.
