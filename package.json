@@ -9,6 +9,7 @@
     "dev": "bun --bun nuxt dev",
     "generate": "bun --bun nuxt generate",
     "preview": "bun --bun nuxt preview",
+    "start": "bun --bun .output/server/index.mjs",
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
@@ -25,5 +26,8 @@
   },
   "engines": {
     "bun": ">=1.2.0"
+  },
+  "devDependencies": {
+    "@vite-pwa/nuxt": "^1.1.1"
   }
 }
