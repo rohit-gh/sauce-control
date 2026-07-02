@@ -47,7 +47,7 @@ function startServer() {
         if (token !== WS_TOKEN) return new Response('Unauthorized', { status: 401 })
       }
       if (srv.upgrade(req, { data: { pty: null } })) return
-      return new Response('SauceControl terminal server', { status: 426 })
+      return new Response('SauceCtrl terminal server', { status: 426 })
     },
     websocket: {
       open(ws) {
@@ -95,7 +95,7 @@ function startServer() {
 
 try {
   startServer()
-  console.log(`[SauceControl] terminal websocket server listening on :${WS_PORT}`)
+  console.log(`[SauceCtrl] terminal websocket server listening on :${WS_PORT}`)
 } catch (err: any) {
   // Another instance already owns the port (e.g. a dev hot-reload). Bow out quietly.
   if (err?.code === 'EADDRINUSE') process.exit(0)

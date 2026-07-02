@@ -1,6 +1,6 @@
-# Contributing to SauceControl
+# Contributing to SauceCtrl
 
-Thank you for your interest in contributing! SauceControl is a local Git GUI built with Nuxt 4 and Bun.
+Thank you for your interest in contributing! SauceCtrl is a local Git GUI built with Nuxt 4 and Bun.
 
 ## Getting started
 

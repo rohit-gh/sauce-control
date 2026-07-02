@@ -1,4 +1,4 @@
-# SauceControl knowledge base
+# SauceCtrl knowledge base
 
 Quick navigation for humans and AI agents. Prefer these docs over re-scanning the whole repo.
 
@@ -10,7 +10,7 @@ Quick navigation for humans and AI agents. Prefer these docs over re-scanning th
 
 ## One-liner
 
-**SauceControl** = local Nuxt 4 SPA + Bun Nitro API that wraps `git`/`gh`, with a real PTY terminal and SQLite project cache.
+**SauceCtrl** = local Nuxt 4 SPA + Bun Nitro API that wraps `git`/`gh`, with a real PTY terminal and SQLite project cache.
 
 On Linux you can also **`bun run build:appimage`** to produce a self-contained AppImage you run directly — handy for sharing or skipping a dev setup. See [getting started → Run as a standalone app](./getting-started.md#run-as-a-standalone-app-appimage).
 

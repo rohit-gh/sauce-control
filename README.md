@@ -1,10 +1,10 @@
-# SauceControl
+# SauceCtrl
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 
 A browser-based Git GUI client — **Git, but pleasant**. Built with **Nuxt 4** and the **Bun** runtime.
 
-SauceControl runs as a local, desktop-style app: the browser renders the UI while a local Nitro (Bun) server does the real work — running `git`, talking to the GitHub CLI (`gh`), spawning interactive terminals, and caching state in SQLite.
+SauceCtrl runs as a local, desktop-style app: the browser renders the UI while a local Nitro (Bun) server does the real work — running `git`, talking to the GitHub CLI (`gh`), spawning interactive terminals, and caching state in SQLite.
 
 ## Features
 
@@ -37,14 +37,14 @@ bun run build:appimage
 
 When it finishes, the AppImage is ready to run in **two places**:
 
-- `release/SauceControl-x86_64.AppImage` (in the project)
+- `release/SauceCtrl-x86_64.AppImage` (in the project)
 - your **Downloads** folder — copied there and made executable for you, so you can run it straight away
 
 ```bash
-~/Downloads/SauceControl-x86_64.AppImage
+~/Downloads/SauceCtrl-x86_64.AppImage
 ```
 
-The AppImage bundles SauceControl and the Bun runtime together. You still need `git` on your machine (and `gh` if you want GitHub features). Your projects and settings live in `~/.sauce-ctrl/` as usual.
+The AppImage bundles SauceCtrl and the Bun runtime together. You still need `git` on your machine (and `gh` if you want GitHub features). Your projects and settings live in `~/.sauce-ctrl/` as usual.
 
 More detail — including what happens on launch and machines without FUSE — is in [Package as a Linux app](./docs/getting-started.md#run-as-a-standalone-app-appimage) in the getting-started guide.
 
@@ -68,7 +68,7 @@ More detail — including what happens on launch and machines without FUSE — i
 
 ## Environment
 
-Copy [`.env.example`](./.env.example) to `.env`. The main SauceControl variable:
+Copy [`.env.example`](./.env.example) to `.env`. The main SauceCtrl variable:
 
 | Variable | Default | Purpose |
 |----------|---------|---------|
@@ -94,4 +94,4 @@ This project was created with [Cursor](https://cursor.com), the AI-powered code 
 
 ## License
 
-[MIT](./LICENSE) © SauceControl Contributors
+[MIT](./LICENSE) © SauceCtrl Contributors

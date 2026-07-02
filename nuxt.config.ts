@@ -5,7 +5,7 @@ export default defineNuxtConfig({
 
   modules: ['@pinia/nuxt', '@nuxtjs/tailwindcss', '@vite-pwa/nuxt'],
 
-  // SauceControl is a local, desktop-style client (terminals, websockets,
+  // SauceCtrl is a local, desktop-style client (terminals, websockets,
   // filesystem). Run as a client-rendered SPA to avoid SSR pitfalls.
   ssr: false,
 
@@ -13,7 +13,7 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      title: 'SauceControl',
+      title: 'SauceCtrl',
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -31,14 +31,14 @@ export default defineNuxtConfig({
     },
   },
 
-  // Installable PWA so users can run SauceControl in its own window while the
+  // Installable PWA so users can run SauceCtrl in its own window while the
   // Nitro server (git/gh/db + terminal WS) runs in the background. Because the
   // API lives on the same origin, the service worker must never intercept it.
   pwa: {
     registerType: 'autoUpdate',
     manifest: {
-      name: 'SauceControl',
-      short_name: 'SauceControl',
+      name: 'SauceCtrl',
+      short_name: 'SauceCtrl',
       description: 'A local Git GUI — Git, but pleasant.',
       lang: 'en',
       theme_color: '#18181b',

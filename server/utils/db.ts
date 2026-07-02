@@ -5,7 +5,7 @@ import { homedir } from 'node:os'
 
 let db: Database | null = null
 
-/** Lazily open (and migrate) the SauceControl SQLite database. */
+/** Lazily open (and migrate) the SauceCtrl SQLite database. */
 export function getDb(): Database {
   if (db) return db
 

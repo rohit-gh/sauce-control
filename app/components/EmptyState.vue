@@ -79,7 +79,7 @@ async function browseAndAdd() {
       S
     </div>
     <div class="text-center">
-      <h1 class="text-xl font-semibold text-white">Welcome to SauceControl</h1>
+      <h1 class="text-xl font-semibold text-white">Welcome to SauceCtrl</h1>
       <p class="mt-1 max-w-md text-sm text-slate-400">
         A browser-based Git client. Add a local repository to visualize its history,
         stage changes, and open a terminal right where you need it.
@@ -99,7 +99,7 @@ async function browseAndAdd() {
           <div class="min-w-0 flex-1">
             <h2 class="text-sm font-semibold text-white">Install &amp; configure Git</h2>
             <p v-if="!git?.installed" class="mt-0.5 text-[12px] text-slate-400">
-              Git isn't installed on this device. SauceControl runs the <span class="font-mono">git</span>
+              Git isn't installed on this device. SauceCtrl runs the <span class="font-mono">git</span>
               CLI for every operation, so it's required.
             </p>
             <p v-else-if="!git?.configured" class="mt-0.5 text-[12px] text-slate-400">
@@ -136,7 +136,7 @@ async function browseAndAdd() {
           <div class="min-w-0 flex-1">
             <h2 class="text-sm font-semibold text-white">Set up the GitHub CLI</h2>
             <p class="mt-0.5 text-[12px] text-slate-400">
-              SauceControl requires the GitHub CLI (<span class="font-mono">gh</span>) to work —
+              SauceCtrl requires the GitHub CLI (<span class="font-mono">gh</span>) to work —
               it powers cloning and pushing to your repositories.
             </p>
             <p v-if="ghReady" class="mt-1 text-[11px] text-green-400">
