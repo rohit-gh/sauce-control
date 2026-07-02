@@ -1,5 +1,5 @@
 #!/bin/bash
-# Build a self-contained SauceControl AppImage.
+# Build a self-contained SauceCtrl AppImage.
 #
 # Bundles: the Bun runtime, the Nitro build (.output), and the terminal-server
 # sources it spawns at runtime. Requires `git` (and optionally `gh`) on the host.
@@ -10,7 +10,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "${ROOT}"
 
-APP_NAME="SauceControl"
+APP_NAME="SauceCtrl"
 ARCH="${ARCH:-x86_64}"
 # Note: `dist` in this repo is a symlink into .output/public, so build here.
 DIST="${ROOT}/release"

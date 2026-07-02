@@ -71,7 +71,7 @@ File-by-file index. Update this when adding major modules.
 | Path | Notes |
 |------|-------|
 | `.nuxt/`, `.output/` | Build artifacts — do not edit |
-| `release/` | AppImage output (`SauceControl-x86_64.AppImage`) + cached `appimagetool` |
+| `release/` | AppImage output (`SauceCtrl-x86_64.AppImage`) + cached `appimagetool` |
 | `node_modules/` | Dependencies |
 | `~/.sauce-ctrl/` | Runtime SQLite (user machine) |
 

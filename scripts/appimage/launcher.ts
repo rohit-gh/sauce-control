@@ -1,5 +1,5 @@
 /**
- * SauceControl AppImage launcher (runs under the bundled Bun runtime).
+ * SauceCtrl AppImage launcher (runs under the bundled Bun runtime).
  *
  * Responsibilities:
  *   1. Pick free TCP ports for the Nitro HTTP server and the terminal WS server.
@@ -107,7 +107,7 @@ async function main() {
   try {
     await waitForHttp(url)
   } catch (err) {
-    console.error('[SauceControl] server did not come up:', err)
+    console.error('[SauceCtrl] server did not come up:', err)
     shutdown(1)
     return
   }
@@ -134,7 +134,7 @@ async function main() {
           `--user-data-dir=${profileDir}`,
           '--no-first-run',
           '--no-default-browser-check',
-          '--class=SauceControl',
+          '--class=SauceCtrl',
         ],
         { stdout: 'inherit', stderr: 'inherit' },
       )
@@ -142,17 +142,17 @@ async function main() {
       shutdown(0)
       return
     } catch (err) {
-      console.error('[SauceControl] could not open app window:', err)
+      console.error('[SauceCtrl] could not open app window:', err)
     }
   } else if (browser) {
     try {
       Bun.spawn([browser.cmd, url], { stdout: 'ignore', stderr: 'ignore' })
     } catch (err) {
-      console.error('[SauceControl] could not open browser:', err)
+      console.error('[SauceCtrl] could not open browser:', err)
     }
   }
 
-  console.log(`[SauceControl] running at ${url} — close this window to quit.`)
+  console.log(`[SauceCtrl] running at ${url} — close this window to quit.`)
   await server.exited
 }
 

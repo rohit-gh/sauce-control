@@ -46,7 +46,7 @@ const bgCmd = 'nohup bun run start > ~/.sauce-ctrl/server.log 2>&1 &'
 
       <div class="min-h-0 flex-1 overflow-y-auto px-5 py-4">
         <p class="mb-4 text-[13px] text-slate-400">
-          SauceControl can run in its own window like a native app. It stays a thin client —
+          SauceCtrl can run in its own window like a native app. It stays a thin client —
           the local server keeps running in the background and does all the Git work.
         </p>
 
@@ -142,7 +142,7 @@ const bgCmd = 'nohup bun run start > ~/.sauce-ctrl/server.log 2>&1 &'
               v-if="installed"
               class="rounded-lg border border-green-500/30 bg-green-500/10 p-3 text-[12px] text-green-300"
             >
-              SauceControl is installed. Launch it from your applications or taskbar/dock.
+              SauceCtrl is installed. Launch it from your applications or taskbar/dock.
             </div>
 
             <template v-else>
@@ -153,7 +153,7 @@ const bgCmd = 'nohup bun run start > ~/.sauce-ctrl/server.log 2>&1 &'
                   :disabled="!canInstall || installing"
                   @click="doInstall"
                 >
-                  {{ installing ? 'Waiting for confirmation…' : 'Install SauceControl' }}
+                  {{ installing ? 'Waiting for confirmation…' : 'Install SauceCtrl' }}
                 </button>
                 <p v-if="!canInstall" class="mt-1 text-[11px] text-slate-500">
                   If the button is disabled, your browser hasn't offered installation yet — use the
@@ -173,7 +173,7 @@ const bgCmd = 'nohup bun run start > ~/.sauce-ctrl/server.log 2>&1 &'
                 <template v-else-if="browser === 'firefox'">
                   <li>Firefox desktop has limited PWA support.</li>
                   <li>
-                    For the best experience, open SauceControl in a Chromium browser (Chrome, Edge, Brave)
+                    For the best experience, open SauceCtrl in a Chromium browser (Chrome, Edge, Brave)
                     and use its install option.
                   </li>
                 </template>

@@ -1,9 +1,9 @@
 ---
-description: SauceControl architecture — read before changing core behavior
+description: SauceCtrl architecture — read before changing core behavior
 alwaysApply: true
 ---
 
-# SauceControl architecture
+# SauceCtrl architecture
 
 Local Git GUI: **Nuxt 4 SPA** (`ssr: false`) + **Nitro API** on **Bun** (not Node).
 

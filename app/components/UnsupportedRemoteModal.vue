@@ -23,7 +23,7 @@ function close() {
 
       <div class="px-5 py-4 text-sm text-slate-300">
         <p>
-          SauceControl only provides GitHub support. For other remotes, please use another Git client
+          SauceCtrl only provides GitHub support. For other remotes, please use another Git client
           or the command line.
         </p>
         <div class="mt-3 rounded-lg border border-ink-700 bg-ink-850 px-3 py-2 text-[11px]">

@@ -19,7 +19,7 @@ export default defineNitroPlugin((nitroApp) => {
 
   const scriptPath = join(process.cwd(), 'server', 'terminal-server.ts')
   if (!existsSync(scriptPath)) {
-    console.warn(`[SauceControl] terminal-server.ts not found at ${scriptPath}; terminal disabled`)
+    console.warn(`[SauceCtrl] terminal-server.ts not found at ${scriptPath}; terminal disabled`)
     return
   }
 
@@ -54,6 +54,6 @@ export default defineNitroPlugin((nitroApp) => {
       })
     }
   } catch (err: any) {
-    console.error('[SauceControl] failed to launch terminal server:', err?.message || err)
+    console.error('[SauceCtrl] failed to launch terminal server:', err?.message || err)
   }
 })

@@ -9,7 +9,7 @@
 | `gh` | optional | GitHub auth/setup (installable from in-app modal) |
 | Linux | `libutil`, `setsid` | PTY allocation and job control |
 
-> **Important:** SauceControl must run under the **Bun runtime**, not Node. Plain `nuxt dev` under Node will fail on `bun:sqlite` / `bun:ffi`.
+> **Important:** SauceCtrl must run under the **Bun runtime**, not Node. Plain `nuxt dev` under Node will fail on `bun:sqlite` / `bun:ffi`.
 
 ## Install
 
@@ -47,7 +47,7 @@ Ensure the terminal child process can start (Bun available, port `3009` free).
 
 ## Run as a standalone app (AppImage)
 
-If you'd rather **run SauceControl like any other desktop app** — without keeping a dev server open — you can build an **AppImage**. It's a single file that bundles the app and the Bun runtime, so you can double-click it or add it to your launcher. No install wizard required.
+If you'd rather **run SauceCtrl like any other desktop app** — without keeping a dev server open — you can build an **AppImage**. It's a single file that bundles the app and the Bun runtime, so you can double-click it or add it to your launcher. No install wizard required.
 
 From the project root:
 
@@ -57,16 +57,16 @@ bun run build:appimage
 
 When the build finishes, you get the AppImage in two spots:
 
-- `release/SauceControl-x86_64.AppImage` — the freshly built file in the project.
+- `release/SauceCtrl-x86_64.AppImage` — the freshly built file in the project.
 - Your **Downloads** folder — the build automatically copies it there and marks it executable, so it's ready to double-click or run immediately.
 
 ```bash
 # run the copy that's already set up for you
-~/Downloads/SauceControl-x86_64.AppImage
+~/Downloads/SauceCtrl-x86_64.AppImage
 
 # or run it from the project (make it executable first)
-chmod +x release/SauceControl-x86_64.AppImage
-./release/SauceControl-x86_64.AppImage
+chmod +x release/SauceCtrl-x86_64.AppImage
+./release/SauceCtrl-x86_64.AppImage
 ```
 
 > The Downloads location follows your system's configured folder name (via `xdg-user-dir`), falling back to `~/Downloads`.
@@ -75,7 +75,7 @@ chmod +x release/SauceControl-x86_64.AppImage
 
 1. Finds free ports for the HTTP API and the terminal WebSocket server.
 2. Starts the server using the bundled Bun runtime.
-3. Opens the UI in its own app window (Chromium-style `--app` mode when available), or your default browser. Closing the window quits SauceControl.
+3. Opens the UI in its own app window (Chromium-style `--app` mode when available), or your default browser. Closing the window quits SauceCtrl.
 
 **Good to know:**
 
@@ -83,7 +83,7 @@ chmod +x release/SauceControl-x86_64.AppImage
 - **Your data stays in** `~/.sauce-ctrl/` — same as when you run from source.
 - **Bun is bundled** from whatever `bun` binary is on your `PATH` at build time.
 - **First build needs network** — `appimagetool` is downloaded once into `release/.tools/`.
-- **No FUSE?** Run with `./release/SauceControl-x86_64.AppImage --appimage-extract-and-run`.
+- **No FUSE?** Run with `./release/SauceCtrl-x86_64.AppImage --appimage-extract-and-run`.
 
 ## First use
 
@@ -95,7 +95,7 @@ chmod +x release/SauceControl-x86_64.AppImage
 
 ## Environment
 
-Copy `.env.example` to `.env` and adjust as needed. Only `SAUCE_WS_PORT` is SauceControl-specific today; other vars are standard Nuxt/Bun tooling.
+Copy `.env.example` to `.env` and adjust as needed. Only `SAUCE_WS_PORT` is SauceCtrl-specific today; other vars are standard Nuxt/Bun tooling.
 
 ## Troubleshooting
 

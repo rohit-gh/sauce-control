@@ -126,7 +126,7 @@ async function copy(text: string) {
           v-if="gitReady && status?.installed && status?.authenticated"
           class="mt-4 rounded-lg border border-green-500/30 bg-green-500/10 p-3 text-sm text-green-300"
         >
-          You're all set — Git is configured and SauceControl can talk to GitHub as
+          You're all set — Git is configured and SauceCtrl can talk to GitHub as
           <b>@{{ status.user }}</b>.
         </div>
 

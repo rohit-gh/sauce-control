@@ -33,7 +33,7 @@ function detectBrowser(): BrowserFamily {
 }
 
 /**
- * Wraps the browser install lifecycle for the SauceControl PWA:
+ * Wraps the browser install lifecycle for the SauceCtrl PWA:
  * - captures `beforeinstallprompt` so we can offer a one-click install button,
  * - tracks whether the app is already running standalone,
  * - checks that the API (Nitro) is actually reachable, since installing while

@@ -1,6 +1,6 @@
 # AGENTS.md
 
-Guidance for AI coding agents working on SauceControl.
+Guidance for AI coding agents working on SauceCtrl.
 
 ## Before you code
 
@@ -12,7 +12,7 @@ Guidance for AI coding agents working on SauceControl.
 
 - **Stack**: Nuxt 4 SPA + Nitro on **Bun** (not Node).
 - **Dev**: `bun run dev` → opens UI + API; terminal WS on port `3009`.
-- **AppImage**: `bun run build:appimage` → `release/SauceControl-x86_64.AppImage` (Linux standalone).
+- **AppImage**: `bun run build:appimage` → `release/SauceCtrl-x86_64.AppImage` (Linux standalone).
 - **Components**: one Nuxt component per UI concern in `app/components/`.
 - **Git**: CLI only via `server/utils/git.ts` — no NUL bytes in exec args.
 - **Terminal**: separate process `server/terminal-server.ts` — never inline `Bun.serve` WS in Nitro.

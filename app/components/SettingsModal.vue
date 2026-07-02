@@ -11,7 +11,7 @@ const theme = useThemeStore()
       <div class="flex items-center justify-between border-b border-ink-800 px-5 py-4">
         <div>
           <h2 class="text-base font-semibold text-white">Settings</h2>
-          <p class="text-[11px] text-slate-500">Personalize how SauceControl looks.</p>
+          <p class="text-[11px] text-slate-500">Personalize how SauceCtrl looks.</p>
         </div>
         <button class="text-slate-500 hover:text-white" title="Close" @click="ui.settingsOpen = false">✕</button>
       </div>
@@ -54,7 +54,7 @@ const theme = useThemeStore()
         <section class="mt-6 border-t border-ink-800 pt-4">
           <h3 class="mb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Desktop app</h3>
           <p class="mb-3 text-[11px] text-slate-500">
-            Install SauceControl as a standalone app that runs in its own window while the local
+            Install SauceCtrl as a standalone app that runs in its own window while the local
             server works in the background.
           </p>
           <button class="btn-subtle" @click="ui.settingsOpen = false; ui.pwaInstallOpen = true">

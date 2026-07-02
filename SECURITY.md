@@ -25,13 +25,13 @@ We aim to acknowledge reports within a few business days.
 
 ## Scope
 
-SauceControl runs **locally** on the developer's machine with access to:
+SauceCtrl runs **locally** on the developer's machine with access to:
 
 - The filesystem (git repositories the user adds)
 - Shell execution (`git`, `gh`, interactive terminal)
 - `~/.sauce-ctrl/` SQLite database
 
-Treat SauceControl as a **trusted local tool** — only add repositories you trust,
+Treat SauceCtrl as a **trusted local tool** — only add repositories you trust,
 and run it on machines you control.
 
 ## Known considerations
@@ -41,5 +41,5 @@ and run it on machines you control.
   per-run token minted by the app and served same-origin at
   `/api/terminal/token`. This prevents both LAN access and cross-site pages
   from opening a shell.
-- GitHub authentication is delegated to the `gh` CLI; SauceControl does not copy
+- GitHub authentication is delegated to the `gh` CLI; SauceCtrl does not copy
   or store your GitHub token in its database.

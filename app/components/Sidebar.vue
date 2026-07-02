@@ -47,7 +47,7 @@ function initials(name: string) {
         S
       </div>
       <div>
-        <div class="text-sm font-semibold text-white">SauceControl</div>
+        <div class="text-sm font-semibold text-white">SauceCtrl</div>
         <div class="text-[11px] text-slate-500">Git, but pleasant</div>
       </div>
     </div>

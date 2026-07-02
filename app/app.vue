@@ -16,6 +16,36 @@ watch(
   },
   { immediate: true },
 )
+
+// Keep the repo view in sync with changes made outside the UI (embedded
+// terminal, external git tools). A full reload on focus catches commits/pushes
+// when returning to the app; lightweight status polling keeps the Changes list
+// current while the tab stays visible.
+const POLL_MS = 4000
+
+function fullRefresh() {
+  if (repo.path && !repo.loading) repo.load(repo.path)
+}
+
+function pollStatus() {
+  if (document.visibilityState !== 'visible') return
+  if (repo.path && !repo.loading) repo.refreshStatus().catch(() => {})
+}
+
+function onVisibility() {
+  if (document.visibilityState === 'visible') fullRefresh()
+}
+
+onMounted(() => {
+  window.addEventListener('focus', fullRefresh)
+  document.addEventListener('visibilitychange', onVisibility)
+  const timer = setInterval(pollStatus, POLL_MS)
+  onBeforeUnmount(() => {
+    window.removeEventListener('focus', fullRefresh)
+    document.removeEventListener('visibilitychange', onVisibility)
+    clearInterval(timer)
+  })
+})
 </script>
 
 <template>
