@@ -45,6 +45,41 @@ bun run preview
 
 Ensure the terminal child process can start (Bun available, port `3009` free).
 
+## Package as a Linux app (AppImage)
+
+SauceControl can be shipped as a single self-contained **AppImage** that bundles
+the Bun runtime and the built app, so users run it like any native Linux program
+(double-click, or from a launcher) with no install step.
+
+```bash
+bun run build:appimage
+```
+
+This produces `release/SauceControl-x86_64.AppImage`. To run it:
+
+```bash
+chmod +x release/SauceControl-x86_64.AppImage
+./release/SauceControl-x86_64.AppImage
+```
+
+What it does on launch (`scripts/appimage/launcher.ts`):
+
+1. Picks free ports for the Nitro HTTP server and the terminal WebSocket server.
+2. Starts the server with the bundled Bun runtime.
+3. Opens the UI in a dedicated app window (a Chromium-family browser via
+   `--app`, so it looks like a standalone program), falling back to the system
+   default browser. Closing the window quits the app.
+
+Notes:
+
+- **Host requirements**: `git` (and optionally `gh`) must be installed on the
+  machine — these are not bundled. Data still lives in `~/.sauce-control/`.
+- **Bundled Bun**: the build copies the Bun binary found on your `PATH`.
+- **appimagetool** is downloaded once to `release/.tools/` on first build
+  (needs network access).
+- Run on a machine without FUSE with
+  `./release/SauceControl-x86_64.AppImage --appimage-extract-and-run`.
+
 ## First use
 
 1. Open the app in your browser.

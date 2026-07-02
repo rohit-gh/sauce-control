@@ -10,6 +10,7 @@
     "generate": "bun --bun nuxt generate",
     "preview": "bun --bun nuxt preview",
     "start": "bun --bun .output/server/index.mjs",
+    "build:appimage": "bash scripts/build-appimage.sh",
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
