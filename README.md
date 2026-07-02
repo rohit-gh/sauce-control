@@ -35,11 +35,13 @@ Prefer not to keep a dev environment running? You can **build a single AppImage*
 bun run build:appimage
 ```
 
-That creates `release/SauceControl-x86_64.AppImage`. Make it executable, then run it:
+When it finishes, the AppImage is ready to run in **two places**:
+
+- `release/SauceControl-x86_64.AppImage` (in the project)
+- your **Downloads** folder — copied there and made executable for you, so you can run it straight away
 
 ```bash
-chmod +x release/SauceControl-x86_64.AppImage
-./release/SauceControl-x86_64.AppImage
+~/Downloads/SauceControl-x86_64.AppImage
 ```
 
 The AppImage bundles SauceControl and the Bun runtime together. You still need `git` on your machine (and `gh` if you want GitHub features). Your projects and settings live in `~/.sauce-control/` as usual.

@@ -55,12 +55,21 @@ From the project root:
 bun run build:appimage
 ```
 
-When the build finishes, you'll have `release/SauceControl-x86_64.AppImage`. Make it executable and run it:
+When the build finishes, you get the AppImage in two spots:
+
+- `release/SauceControl-x86_64.AppImage` — the freshly built file in the project.
+- Your **Downloads** folder — the build automatically copies it there and marks it executable, so it's ready to double-click or run immediately.
 
 ```bash
+# run the copy that's already set up for you
+~/Downloads/SauceControl-x86_64.AppImage
+
+# or run it from the project (make it executable first)
 chmod +x release/SauceControl-x86_64.AppImage
 ./release/SauceControl-x86_64.AppImage
 ```
+
+> The Downloads location follows your system's configured folder name (via `xdg-user-dir`), falling back to `~/Downloads`.
 
 **What happens when you launch it** (`scripts/appimage/launcher.ts`):
 
