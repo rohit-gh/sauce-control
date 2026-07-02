@@ -45,40 +45,36 @@ bun run preview
 
 Ensure the terminal child process can start (Bun available, port `3009` free).
 
-## Package as a Linux app (AppImage)
+## Run as a standalone app (AppImage)
 
-SauceControl can be shipped as a single self-contained **AppImage** that bundles
-the Bun runtime and the built app, so users run it like any native Linux program
-(double-click, or from a launcher) with no install step.
+If you'd rather **run SauceControl like any other desktop app** — without keeping a dev server open — you can build an **AppImage**. It's a single file that bundles the app and the Bun runtime, so you can double-click it or add it to your launcher. No install wizard required.
+
+From the project root:
 
 ```bash
 bun run build:appimage
 ```
 
-This produces `release/SauceControl-x86_64.AppImage`. To run it:
+When the build finishes, you'll have `release/SauceControl-x86_64.AppImage`. Make it executable and run it:
 
 ```bash
 chmod +x release/SauceControl-x86_64.AppImage
 ./release/SauceControl-x86_64.AppImage
 ```
 
-What it does on launch (`scripts/appimage/launcher.ts`):
+**What happens when you launch it** (`scripts/appimage/launcher.ts`):
 
-1. Picks free ports for the Nitro HTTP server and the terminal WebSocket server.
-2. Starts the server with the bundled Bun runtime.
-3. Opens the UI in a dedicated app window (a Chromium-family browser via
-   `--app`, so it looks like a standalone program), falling back to the system
-   default browser. Closing the window quits the app.
+1. Finds free ports for the HTTP API and the terminal WebSocket server.
+2. Starts the server using the bundled Bun runtime.
+3. Opens the UI in its own app window (Chromium-style `--app` mode when available), or your default browser. Closing the window quits SauceControl.
 
-Notes:
+**Good to know:**
 
-- **Host requirements**: `git` (and optionally `gh`) must be installed on the
-  machine — these are not bundled. Data still lives in `~/.sauce-control/`.
-- **Bundled Bun**: the build copies the Bun binary found on your `PATH`.
-- **appimagetool** is downloaded once to `release/.tools/` on first build
-  (needs network access).
-- Run on a machine without FUSE with
-  `./release/SauceControl-x86_64.AppImage --appimage-extract-and-run`.
+- **`git` is still required** on the machine where you run the AppImage (`gh` too, if you use GitHub features). Those tools aren't bundled inside the image.
+- **Your data stays in** `~/.sauce-control/` — same as when you run from source.
+- **Bun is bundled** from whatever `bun` binary is on your `PATH` at build time.
+- **First build needs network** — `appimagetool` is downloaded once into `release/.tools/`.
+- **No FUSE?** Run with `./release/SauceControl-x86_64.AppImage --appimage-extract-and-run`.
 
 ## First use
 

@@ -27,12 +27,31 @@ bun run dev
 
 Open the printed URL (e.g. `http://localhost:3001`). See [docs/getting-started.md](./docs/getting-started.md) for full setup and troubleshooting.
 
+## Run as a standalone app (Linux)
+
+Prefer not to keep a dev environment running? You can **build a single AppImage** — one portable file you double-click or launch from your app menu, with no separate install step.
+
+```bash
+bun run build:appimage
+```
+
+That creates `release/SauceControl-x86_64.AppImage`. Make it executable, then run it:
+
+```bash
+chmod +x release/SauceControl-x86_64.AppImage
+./release/SauceControl-x86_64.AppImage
+```
+
+The AppImage bundles SauceControl and the Bun runtime together. You still need `git` on your machine (and `gh` if you want GitHub features). Your projects and settings live in `~/.sauce-control/` as usual.
+
+More detail — including what happens on launch and machines without FUSE — is in [Package as a Linux app](./docs/getting-started.md#run-as-a-standalone-app-appimage) in the getting-started guide.
+
 ## Documentation
 
 | Doc | Description |
 |-----|-------------|
 | [docs/README.md](./docs/README.md) | Knowledge base index |
-| [docs/getting-started.md](./docs/getting-started.md) | Install, run, env vars |
+| [docs/getting-started.md](./docs/getting-started.md) | Install, run, AppImage, env vars |
 | [docs/architecture.md](./docs/architecture.md) | System design and constraints |
 | [docs/project-map.md](./docs/project-map.md) | File index and API reference |
 | [AGENTS.md](./AGENTS.md) | Quick guide for AI coding agents |
